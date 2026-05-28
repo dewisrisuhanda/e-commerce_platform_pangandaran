@@ -1,121 +1,105 @@
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import GuestLayout from '@/Layouts/GuestLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
-import { FormEventHandler } from 'react';
+// import libraries
+import { useEffect, FormEventHandler } from "react";
+import { Head, Link, useForm } from "@inertiajs/react";
 
-export default function Register() {
+// import components
+import FormInput from "@/Components/FormInput";
+import PrimaryButton from "@/Components/PrimaryButton";
+import GoogleIcon from "@/Components/Icons/GoogleIcon";
+import AuthLayout from "@/Layouts/AuthLayout";
+
+const Register = () => {
     const { data, setData, post, processing, errors, reset } = useForm({
-        name: '',
-        email: '',
-        password: '',
-        password_confirmation: '',
+        name: "",
+        email: "",
+        password: "",
+        password_confirmation: "",
     });
+
+    useEffect(() => {
+        return () => reset("password", "password_confirmation");
+    }, []);
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-
-        post(route('register'), {
-            onFinish: () => reset('password', 'password_confirmation'),
-        });
+        setData("password_confirmation", data.password);
+        post(route("register"));
     };
 
     return (
-        <GuestLayout>
+        <>
             <Head title="Register" />
 
-            <form onSubmit={submit}>
-                <div>
-                    <InputLabel htmlFor="name" value="Name" />
+            <h2 className="text-3xl font-bold text-center text-gray-800 mb-8 tracking-wide shrink-0">
+                Register
+            </h2>
 
-                    <TextInput
+            <form onSubmit={submit} className="flex flex-col grow h-full">
+                <div className="space-y-6 grow">
+                    <FormInput
+                        label="Fullname"
                         id="name"
-                        name="name"
+                        type="text"
                         value={data.name}
-                        className="mt-1 block w-full"
-                        autoComplete="name"
-                        isFocused={true}
-                        onChange={(e) => setData('name', e.target.value)}
+                        placeholder="Enter your name"
+                        onChange={(e) => setData("name", e.target.value)}
+                        errorMessage={errors.name}
                         required
                     />
-
-                    <InputError message={errors.name} className="mt-2" />
-                </div>
-
-                <div className="mt-4">
-                    <InputLabel htmlFor="email" value="Email" />
-
-                    <TextInput
+                    <FormInput
+                        label="Email Address"
                         id="email"
                         type="email"
-                        name="email"
                         value={data.email}
-                        className="mt-1 block w-full"
-                        autoComplete="username"
-                        onChange={(e) => setData('email', e.target.value)}
+                        placeholder="Masukkan email"
+                        onChange={(e) => setData("email", e.target.value)}
+                        errorMessage={errors.email}
                         required
                     />
-
-                    <InputError message={errors.email} className="mt-2" />
-                </div>
-
-                <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
-
-                    <TextInput
+                    <FormInput
+                        label="Create Password"
                         id="password"
                         type="password"
-                        name="password"
                         value={data.password}
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                        onChange={(e) => setData('password', e.target.value)}
+                        placeholder="Masukkan password disini"
+                        onChange={(e) => {
+                            setData("password", e.target.value);
+                            setData("password_confirmation", e.target.value);
+                        }}
+                        errorMessage={errors.password}
                         required
                     />
-
-                    <InputError message={errors.password} className="mt-2" />
+                    <div className="pt-2">
+                        <PrimaryButton disabled={processing}>
+                            {processing ? "Memproses..." : "Daftar"}
+                        </PrimaryButton>
+                    </div>
+                    <div className="text-center mt-6">
+                        <p className="text-sm text-gray-600 mb-3">
+                            Use Social Account
+                        </p>
+                        <button
+                            type="button"
+                            className="inline-flex items-center justify-center w-10 h-10 bg-white rounded-full shadow hover:shadow-md transition-all duration-300 hover:scale-110"
+                        >
+                            <GoogleIcon className="w-5 h-5" />
+                        </button>
+                    </div>
                 </div>
 
-                <div className="mt-4">
-                    <InputLabel
-                        htmlFor="password_confirmation"
-                        value="Confirm Password"
-                    />
-
-                    <TextInput
-                        id="password_confirmation"
-                        type="password"
-                        name="password_confirmation"
-                        value={data.password_confirmation}
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                        onChange={(e) =>
-                            setData('password_confirmation', e.target.value)
-                        }
-                        required
-                    />
-
-                    <InputError
-                        message={errors.password_confirmation}
-                        className="mt-2"
-                    />
-                </div>
-
-                <div className="mt-4 flex items-center justify-end">
+                <div className="mt-auto pt-6 text-center text-sm text-gray-600 shrink-0">
+                    Already have an account?{" "}
                     <Link
-                        href={route('login')}
-                        className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        href={route("login")}
+                        className="font-bold text-[#3b82f6] hover:text-[#2563eb] hover:underline transition-colors duration-200"
                     >
-                        Already registered?
+                        Sign In
                     </Link>
-
-                    <PrimaryButton className="ms-4" disabled={processing}>
-                        Register
-                    </PrimaryButton>
                 </div>
             </form>
-        </GuestLayout>
+        </>
     );
-}
+};
+
+Register.layout = (page: React.ReactNode) => <AuthLayout children={page} />;
+export default Register;
