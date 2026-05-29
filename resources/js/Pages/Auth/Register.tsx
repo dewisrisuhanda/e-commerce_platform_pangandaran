@@ -78,12 +78,12 @@ const Register = () => {
                         <p className="text-sm text-gray-600 mb-3">
                             Use Social Account
                         </p>
-                        <button
-                            type="button"
+                        <a
+                            href={route("google.redirect")}
                             className="inline-flex items-center justify-center w-10 h-10 bg-white rounded-full shadow hover:shadow-md transition-all duration-300 hover:scale-110"
                         >
                             <GoogleIcon className="w-5 h-5" />
-                        </button>
+                        </a>
                     </div>
                 </div>
 
