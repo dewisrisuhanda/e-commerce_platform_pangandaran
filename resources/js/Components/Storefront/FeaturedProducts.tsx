@@ -1,7 +1,7 @@
 import { ArrowRight, ChevronLeft, ChevronRight, Star } from "lucide-react";
 
-// DUMMY DATA
 const products = [
+    // data dummy
     {
         id: 1,
         name: "Udang Besar (250g)",
@@ -42,8 +42,8 @@ const products = [
 export default function FeaturedProducts() {
     return (
         <section className="w-full bg-[#EAF6F6] py-16 px-4 md:px-8">
-            <div className="max-w-[1400px] mx-auto relative">
-                {/* HEADER */}
+            <div className="max-w-350 mx-auto relative">
+                {/* header */}
                 <div className="flex items-center justify-between mb-8">
                     <h2 className="text-3xl md:text-4xl font-bold text-black tracking-tight">
                         Feature Products
@@ -53,9 +53,8 @@ export default function FeaturedProducts() {
                     </button>
                 </div>
 
-                {/* CONTAINER CARD */}
+                {/* container card */}
                 <div className="relative">
-                    {/* Tombol Panah Kiri (Nanti buat carousel) */}
                     <button className="absolute -left-4 top-1/2 -translate-y-1/2 bg-white p-3 rounded-full shadow-lg z-10 hover:bg-gray-100 transition">
                         <ChevronLeft className="w-6 h-6" />
                     </button>
@@ -99,7 +98,6 @@ export default function FeaturedProducts() {
                         ))}
                     </div>
 
-                    {/* Tombol Panah Kanan */}
                     <button className="absolute -right-4 top-1/2 -translate-y-1/2 bg-white p-3 rounded-full shadow-lg z-10 hover:bg-gray-100 transition">
                         <ChevronRight className="w-6 h-6" />
                     </button>
