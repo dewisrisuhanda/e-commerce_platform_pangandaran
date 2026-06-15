@@ -4,6 +4,7 @@ import HeroSection from "@/Components/Storefront/HeroSection";
 import InfoBanner from "@/Components/Storefront/InfoBanner";
 import CategorySection from "@/Components/Storefront/CategorySection";
 import FeaturedProducts from "@/Components/Storefront/FeaturedProducts";
+import StoreFeatures from "@/Components/Storefront/StoreFeatures";
 
 export default function Dashboard() {
     return (
@@ -14,6 +15,9 @@ export default function Dashboard() {
             <InfoBanner />
             <CategorySection />
             <FeaturedProducts />
+            <StoreFeatures />
+
+            
         </StorefrontLayout>
     );
 }
