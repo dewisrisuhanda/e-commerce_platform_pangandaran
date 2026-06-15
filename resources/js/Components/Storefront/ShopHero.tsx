@@ -1,10 +1,12 @@
+import React from "react";
 import { Search, SlidersHorizontal } from "lucide-react";
 import heroBeach from "@/assets/images/hero_bg.jpeg";
 
-export default function HeroSection() {
+export default function ShopHero() {
     return (
-        <div className="relative w-full h-150 md:h-195 flex flex-col items-center justify-center mb-16">
-            <div className="absolute inset-0 w-full h-full rounded-b-[2.5rem] md:rounded-b-[3.5rem] overflow-hidden shadow-lg z-0">
+        <div className="relative w-full h-112.5 md:h-195 flex flex-col items-center justify-center mb-24 md:mb-16 z-10">
+            {/* wrapper */}
+            <div className="absolute inset-0 w-full h-full rounded-b-4xl md:rounded-b-[3.5rem] overflow-hidden shadow-lg z-0">
                 <div className="absolute top-0 left-0 w-full h-[60%]">
                     <img
                         src={heroBeach}
@@ -17,19 +19,19 @@ export default function HeroSection() {
                 <div className="absolute bottom-0 left-0 w-full h-[40%] bg-linear-to-b from-[#40E0D0] to-[#E0F8F8]"></div>
             </div>
 
-            <div className="absolute bottom-[40%] w-full flex flex-col items-center pointer-events-none z-10">
-                <h1 className="text-[90px] md:text-[170px] font-bold tracking-widest leading-[0.8] text-[#40E0D0] drop-shadow-md -mb-6 md:-mb-12">
-                    PARIGI
-                </h1>
-                <h1 className="text-[90px] md:text-[170px] font-bold tracking-widest leading-[0.8] text-white drop-shadow-md translate-y-1/2">
-                    MART
-                </h1>
+            {/* title */}
+            <div className="absolute top-[35%] md:top-[30%] -translate-y-1/2 w-full flex justify-center z-10 px-4">
+                <div className="bg-white/10 backdrop-blur-md border border-white/20 px-8 py-4 md:px-12 md:py-6 rounded-2xl md:rounded-3xl shadow-[0_10px_50px_rgba(0,0,0,0.1)] text-center">
+                    <h1 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tighter select-none">
+                        <span className="text-[#40E0D0]">Parigi</span>
+                        <span className="text-white">Mart</span>
+                    </h1>
+                </div>
             </div>
 
-            {/* search bar */}
+            {/* searchbar */}
             <div className="absolute -bottom-16 md:bottom-16 w-full max-w-5xl px-4 z-20 pointer-events-auto">
                 <div className="bg-white rounded-3xl md:rounded-full p-4 md:p-2 flex flex-col md:flex-row items-center gap-4 shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-gray-100">
-                    {/* category & buy toggle */}
                     <div className="flex items-center gap-2 md:gap-4 px-2 w-full md:w-auto justify-center md:justify-start">
                         <button className="flex-1 md:flex-none bg-[#F0F2F5] text-[#334155] px-6 py-2.5 md:py-3 rounded-full font-bold text-sm transition hover:bg-gray-200">
                             Category
