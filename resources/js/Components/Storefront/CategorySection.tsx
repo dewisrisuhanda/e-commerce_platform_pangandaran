@@ -1,65 +1,23 @@
 import { ArrowRight } from "lucide-react";
 
-const categories = [
-    // dummy categories buat sementara
-    {
-        id: 1,
-        name: "Seafood",
-        image: "https://images.unsplash.com/photo-1615141982883-c7da0e69f585?auto=format&fit=crop&q=80&w=400",
-    },
-    {
-        id: 2,
-        name: "Vegetable",
-        image: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=400",
-    },
-    {
-        id: 3,
-        name: "Kelapa",
-        image: "https://images.unsplash.com/photo-1526424382096-74a93e105682?auto=format&fit=crop&q=80&w=400",
-    },
-    {
-        id: 4,
-        name: "Baju",
-        image: "https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?auto=format&fit=crop&q=80&w=400",
-    },
-    {
-        id: 5,
-        name: "Meat",
-        image: "https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&q=80&w=400",
-    },
-    {
-        id: 6,
-        name: "Cemilan",
-        image: "https://images.unsplash.com/photo-1621939514649-280e2ee25f60?auto=format&fit=crop&q=80&w=400",
-    },
-    {
-        id: 7,
-        name: "Fruits",
-        image: "https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&q=80&w=400",
-    },
-    {
-        id: 8,
-        name: "Kerajinan",
-        image: "https://images.unsplash.com/photo-1606760227091-3dd870d97f1d?auto=format&fit=crop&q=80&w=400",
-    },
-    {
-        id: 9,
-        name: "Kerajinan",
-        image: "https://images.unsplash.com/photo-1516054575922-f0b8eeadec1a?auto=format&fit=crop&q=80&w=400",
-    },
-    {
-        id: 10,
-        name: "Kain",
-        image: "https://images.unsplash.com/photo-1584323869269-0eb6611488c5?auto=format&fit=crop&q=80&w=400",
-    },
-];
+// tipe data untuk kategori
+export interface Category {
+    id: number | string;
+    name: string;
+    image: string;
+}
 
-export default function CategorySection() {
+interface CategorySectionProps {
+    categories: Category[];
+}
+
+// ambil props categories dan tampilkan grid kategori
+export default function CategorySection({ categories }: CategorySectionProps) {
     return (
         <section className="w-full bg-[#EAF6F6] py-12 md:py-16 mt-8 mb-16">
             <div className="max-w-350 mx-auto px-4 md:px-8">
-                {/* header */}
-                <div className="flex items-end justify-between mb-8">
+                {/* HEADER */}
+                <div className="flex items-center justify-between mb-8">
                     <div>
                         <h2 className="text-3xl md:text-4xl font-bold text-black mb-2 tracking-tight">
                             Shop by Category
@@ -74,7 +32,7 @@ export default function CategorySection() {
                     </button>
                 </div>
 
-                {/* category grid */}
+                {/* categories grid hasil mapping dari props {categories} */}
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
                     {categories.map((category) => (
                         <a
