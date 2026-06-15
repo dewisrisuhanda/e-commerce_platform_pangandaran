@@ -1,12 +1,21 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, usePage } from "@inertiajs/react";
-import { ShoppingCart, User } from "lucide-react";
+import { ShoppingCart, User, Menu, X } from "lucide-react";
 import logoParigi from "@/assets/images/parigi_logo.png";
+
+const navLinks = [
+    { name: "Home", href: "/dashboard" },
+    { name: "Shop", href: "/shop" },
+    { name: "Order", href: "#" },
+    { name: "Delivery", href: "#" },
+];
 
 export default function Navbar() {
     const user = usePage().props.auth.user;
+    const { url } = usePage();
 
     const [isVisible, setIsVisible] = useState(true);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     // scroll effect
     useEffect(() => {
@@ -20,10 +29,8 @@ export default function Navbar() {
             }, 250);
         };
 
-        // listener buat semua browser
         window.addEventListener("scroll", handleScroll);
 
-        // clear listener pas komponen unmount
         return () => {
             window.removeEventListener("scroll", handleScroll);
             clearTimeout(scrollTimeout);
@@ -32,53 +39,69 @@ export default function Navbar() {
 
     return (
         <div
-            className={`fixed top-6 w-full flex justify-center z-50 px-4 md:px-8 transition-transform duration-300 ease-in-out ${
+            className={`fixed top-4 md:top-6 w-full flex justify-center z-50 px-4 md:px-8 transition-transform duration-300 ease-in-out ${
                 isVisible ? "translate-y-0" : "translate-y-[-150%]"
             }`}
         >
-            <nav className="w-full max-w-350 bg-linear-to-r from-[#389f9f]/50 via-[#74bcbc]/30 to-[#f0f4f8]/70 backdrop-blur-xl shadow-md rounded-full px-6 py-3 flex items-center justify-between border border-white/40">
-                {/*nav logo*/}
-                <Link href="/" className="flex items-center">
-                    <img
-                        src={logoParigi}
-                        alt="Parigi Mart Logo"
-                        className="h-12 object-contain drop-shadow-md"
-                    />
-                </Link>
+            <nav className="w-full max-w-300 bg-linear-to-r from-[#389f9f]/80 via-[#74bcbc]/60 to-[#f0f4f8]/90 backdrop-blur-xl shadow-md rounded-3xl md:rounded-full px-4 py-2 md:px-6 md:py-3 flex flex-col md:flex-row items-center justify-between border border-white/40">
+                {/* header row on mobile */}
+                <div className="flex items-center justify-between w-full md:w-auto">
+                    {/* hamburger menu */}
+                    <button
+                        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                        className="md:hidden p-2 text-white bg-black/10 rounded-lg hover:bg-black/20 transition"
+                    >
+                        {isMobileMenuOpen ? (
+                            <X size={24} />
+                        ) : (
+                            <Menu size={24} />
+                        )}
+                    </button>
 
-                {/* navlinks */}
-                <div className="hidden lg:flex items-center justify-between gap-2 bg-white/40 backdrop-blur-md rounded-full p-2 px-6 xl:px-8 shadow-inner border border-white/50 min-w-125 xl:min-w-162.5">
+                    {/* logo */}
                     <Link
-                        href="#"
-                        className="bg-white text-gray-900 py-2.5 rounded-full font-bold shadow-sm text-sm text-center flex-1"
+                        href="/dashboard"
+                        className="flex items-center mx-auto md:mx-0"
                     >
-                        Home
+                        <img
+                            src={logoParigi}
+                            alt="Parigi Mart Logo"
+                            className="h-10 md:h-12 object-contain drop-shadow-md"
+                        />
                     </Link>
-                    <Link
-                        href="#"
-                        className="text-[#4A5568] hover:text-gray-900 hover:bg-white/40 py-2.5 rounded-full font-bold text-sm transition-all text-center flex-1"
-                    >
-                        Shop
-                    </Link>
-                    <Link
-                        href="#"
-                        className="text-[#4A5568] hover:text-gray-900 hover:bg-white/40 py-2.5 rounded-full font-bold text-sm transition-all text-center flex-1"
-                    >
-                        Order
-                    </Link>
-                    <Link
-                        href="#"
-                        className="text-[#4A5568] hover:text-gray-900 hover:bg-white/40 py-2.5 rounded-full font-bold text-sm transition-all text-center flex-1"
-                    >
-                        Delivery
-                    </Link>
+
+                    {/* cart icon mobile */}
+                    <button className="md:hidden p-2 text-white bg-black/10 rounded-lg hover:bg-black/20 transition relative">
+                        <ShoppingCart size={24} />
+                    </button>
                 </div>
 
-                {/* profile icon */}
-                <div className="flex items-center gap-3">
-                    <button className="w-13 h-13 bg-white/90 hover:bg-white rounded-full flex items-center justify-center transition shadow-sm border border-gray-100">
+                {/* desktop navlinks */}
+                <div className="hidden md:flex items-center justify-between gap-2 bg-white/40 backdrop-blur-md rounded-full p-2 px-6 xl:px-8 shadow-inner border border-white/50">
+                    {navLinks.map((link) => {
+                        const isActive =
+                            url.startsWith(link.href) && link.href !== "#";
+                        return (
+                            <Link
+                                key={link.name}
+                                href={link.href}
+                                className={`py-2 rounded-full font-bold shadow-sm text-sm text-center px-4 transition-all ${
+                                    isActive
+                                        ? "bg-white text-gray-900 shadow-sm"
+                                        : "text-[#4A5568] hover:text-gray-900 hover:bg-white/40"
+                                }`}
+                            >
+                                {link.name}
+                            </Link>
+                        );
+                    })}
+                </div>
+
+                {/* desktop profile */}
+                <div className="hidden md:flex items-center gap-3">
+                    <button className="w-12 h-12 bg-white/90 hover:bg-white rounded-full flex items-center justify-center transition shadow-sm border border-gray-100">
                         <ShoppingCart
-                            className="w-6 h-6 text-gray-800"
+                            className="w-5 h-5 text-gray-800"
                             strokeWidth={2}
                         />
                     </button>
@@ -86,29 +109,66 @@ export default function Navbar() {
                     {user ? (
                         <Link
                             href={route("profile.edit")}
-                            className="flex items-center gap-3 bg-white/90 hover:bg-white pl-6 pr-2 py-2 rounded-full transition shadow-sm border border-gray-100"
+                            className="flex items-center gap-3 bg-white/90 hover:bg-white pl-5 pr-2 py-1.5 rounded-full transition shadow-sm border border-gray-100"
                         >
                             <span className="font-bold text-sm text-gray-800">
                                 {user.name.split(" ")[0]}
                             </span>
-                            <div className="w-9 h-9 bg-[#344054] text-white rounded-full flex items-center justify-center text-sm font-bold">
+                            <div className="w-8 h-8 bg-[#344054] text-white rounded-full flex items-center justify-center text-sm font-bold">
                                 {user.name.charAt(0).toUpperCase()}
                             </div>
                         </Link>
                     ) : (
                         <Link
                             href={route("login")}
-                            className="flex items-center gap-3 bg-white/90 hover:bg-white pl-6 pr-2 py-2 rounded-full transition shadow-sm border border-gray-100"
+                            className="flex items-center gap-2 bg-white/90 hover:bg-white px-5 py-2.5 rounded-full transition shadow-sm border border-gray-100"
                         >
-                            <span className="font-bold text-gray-800 text-base">
+                            <User className="w-4 h-4 text-gray-800" />
+                            <span className="font-bold text-gray-800 text-sm">
                                 Login
                             </span>
-                            <div className="w-9 h-9 bg-[#344054] text-white rounded-full flex items-center justify-center">
-                                <User className="w-5 h-5" />
-                            </div>
                         </Link>
                     )}
                 </div>
+
+                {/* mobile dropdown */}
+                {isMobileMenuOpen && (
+                    <div className="md:hidden w-full flex flex-col gap-2 mt-4 pt-4 border-t border-white/20">
+                        {navLinks.map((link) => {
+                            const isActive =
+                                url.startsWith(link.href) && link.href !== "#";
+                            return (
+                                <Link
+                                    key={link.name}
+                                    href={link.href}
+                                    className={`py-3 rounded-xl font-bold text-sm px-4 transition-all ${
+                                        isActive
+                                            ? "bg-white text-gray-900 shadow-sm"
+                                            : "text-white hover:bg-white/20"
+                                    }`}
+                                >
+                                    {link.name}
+                                </Link>
+                            );
+                        })}
+                        {/* profile link mobile */}
+                        {user ? (
+                            <Link
+                                href={route("profile.edit")}
+                                className="py-3 mt-2 rounded-xl font-bold text-sm px-4 bg-white text-gray-900 flex items-center justify-center gap-2 shadow-sm"
+                            >
+                                <User size={18} /> My Profile
+                            </Link>
+                        ) : (
+                            <Link
+                                href={route("login")}
+                                className="py-3 mt-2 rounded-xl font-bold text-sm px-4 bg-gray-900 text-white flex items-center justify-center gap-2 shadow-sm"
+                            >
+                                <User size={18} /> Login
+                            </Link>
+                        )}
+                    </div>
+                )}
             </nav>
         </div>
     );
