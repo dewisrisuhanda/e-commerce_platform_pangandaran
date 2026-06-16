@@ -13,14 +13,14 @@ export default function AuthBranding({ type = "login" }: Props) {
                     src={logoParigi}
                     alt="ParigiMart Logo"
                     loading="lazy"
-                    className="w-48 sm:w-64 md:w-80 scale-125 md:scale-150 drop-shadow-xl transition-transform duration-500 ease-out mb-4 md:mb-8 select-none shrink-0"
+                    className="w-32 sm:w-48 md:w-64 drop-shadow-xl transition-transform duration-500 ease-out mb-4 md:mb-8 select-none shrink-0"
                 />
                 <h1
-                    className="text-center text-4xl sm:text-5xl md:text-6xl tracking-tight select-none relative z-10 shrink-0"
+                    className="text-center font-bold text-4xl sm:text-5xl md:text-6xl tracking-tight select-none relative z-10 shrink-0 drop-shadow-[0_4px_4px_rgba(0,0,0,0.4)]"
                     style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
                 >
-                    <span className="text-[#367533]">Parigi</span>
-                    <span className="text-[#F58C00]">Mart</span>
+                    <span className="text-[#4FD1C5]">Parigi</span>
+                    <span className="text-white">Mart</span>
                 </h1>
 
                 {type === "register" && (

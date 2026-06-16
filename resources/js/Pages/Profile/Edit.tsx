@@ -1,43 +1,57 @@
-import AuthenticatedLayout from '@/Layouts/AuthLayout';
-import { PageProps } from '@/types';
-import { Head } from '@inertiajs/react';
-import DeleteUserForm from './Partials/DeleteUserForm';
-import UpdatePasswordForm from './Partials/UpdatePasswordForm';
-import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm';
+import React from "react";
+import { PageProps } from "@/types";
+import { Head, Link, usePage } from "@inertiajs/react";
+import { ArrowLeft } from "lucide-react";
+
+import SettingsSidebar from "@/Components/Profile/SettingsSidebar";
+import ProfileHeader from "@/Components/Profile/ProfileHeader";
+import UpdateProfileInformationForm from "./Partials/UpdateProfileInformationForm";
 
 export default function Edit({
     mustVerifyEmail,
     status,
 }: PageProps<{ mustVerifyEmail: boolean; status?: string }>) {
+    const user = usePage().props.auth.user;
+
     return (
-        <AuthenticatedLayout
-            header={
-                <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                    Profile
-                </h2>
-            }
-        >
-            <Head title="Profile" />
+        <div className="min-h-screen bg-[#F8FAFC] py-12 px-4 md:px-8 font-sans">
+            <Head title="Account Settings" />
 
-            <div className="py-12">
-                <div className="mx-auto max-w-7xl space-y-6 sm:px-6 lg:px-8">
-                    <div className="bg-white p-4 shadow sm:rounded-lg sm:p-8">
-                        <UpdateProfileInformationForm
-                            mustVerifyEmail={mustVerifyEmail}
-                            status={status}
-                            className="max-w-xl"
-                        />
-                    </div>
+            <div className="max-w-6xl mx-auto">
+                <div className="mb-10">
+                    <Link
+                        href="/"
+                        className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white border border-slate-200 shadow-sm hover:bg-slate-50 transition mb-6"
+                    >
+                        <ArrowLeft className="w-6 h-6 text-gray-700" />
+                    </Link>
+                    <h1 className="text-3xl md:text-4xl font-bold text-gray-950 tracking-tight">
+                        Account Settings
+                    </h1>
+                    <p className="text-slate-500 mt-1.5 text-base">
+                        Manage your personal information and security
+                        preferences.
+                    </p>
+                </div>
 
-                    <div className="bg-white p-4 shadow sm:rounded-lg sm:p-8">
-                        <UpdatePasswordForm className="max-w-xl" />
-                    </div>
+                <div className="flex flex-col lg:flex-row gap-8">
+                    {/* sidebar component */}
+                    <SettingsSidebar />
 
-                    <div className="bg-white p-4 shadow sm:rounded-lg sm:p-8">
-                        <DeleteUserForm className="max-w-xl" />
+                    <div className="flex-1 space-y-8">
+                        {/* header profgile */}
+                        <ProfileHeader user={user} />
+
+                        {/* form component */}
+                        <div className="bg-white rounded-3xl shadow-sm p-6 md:p-8 border border-slate-100">
+                            <UpdateProfileInformationForm
+                                mustVerifyEmail={mustVerifyEmail}
+                                status={status}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
-        </AuthenticatedLayout>
+        </div>
     );
 }

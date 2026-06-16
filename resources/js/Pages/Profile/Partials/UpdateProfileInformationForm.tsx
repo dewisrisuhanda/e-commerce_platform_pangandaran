@@ -1,105 +1,213 @@
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import { Transition } from '@headlessui/react';
-import { Link, useForm, usePage } from '@inertiajs/react';
-import { FormEventHandler } from 'react';
+import React, { useState, useEffect } from "react";
+import { useForm, usePage } from "@inertiajs/react";
+import { Transition } from "@headlessui/react";
+import { PageProps } from "@/types";
+
+// helper function untuk ekstrak nama
+const extractNames = (fullName: string) => {
+    const parts = fullName.split(" ");
+    return {
+        first: parts[0] || "",
+        last: parts.slice(1).join(" ") || "",
+    };
+};
 
 export default function UpdateProfileInformation({
     mustVerifyEmail,
     status,
-    className = '',
 }: {
     mustVerifyEmail: boolean;
     status?: string;
-    className?: string;
 }) {
-    const user = usePage().props.auth.user;
+    // ambil user dari page props
+    const user = usePage<PageProps>().props.auth.user;
 
-    const { data, setData, patch, errors, processing, recentlySuccessful } =
-        useForm({
+    // validasi tanggal lahir agar tidak lebih dari hari ini
+    const today = new Date().toISOString().split("T")[0];
+
+    // ambil nama dari user
+    const initialNames = extractNames(user.name);
+
+    const [firstName, setFirstName] = useState(initialNames.first);
+    const [lastName, setLastName] = useState(initialNames.last);
+
+    const {
+        data,
+        setData,
+        patch,
+        errors,
+        processing,
+        recentlySuccessful,
+        clearErrors,
+    } = useForm({
+        name: user.name,
+        email: user.email,
+        phone: user.phone || "",
+        gender: user.gender || "",
+        dob: user.dob || "",
+    });
+
+    useEffect(() => {
+        setData("name", `${firstName} ${lastName}`.trim());
+    }, [firstName, lastName]);
+
+    const submit = (e: React.FormEvent) => {
+        e.preventDefault();
+        patch(route("profile.update"));
+    };
+
+    // handle cancel logic
+    const handleCancel = () => {
+        setFirstName(initialNames.first);
+        setLastName(initialNames.last);
+        setData({
             name: user.name,
             email: user.email,
+            phone: user.phone || "",
+            gender: user.gender || "",
+            dob: user.dob || "",
         });
-
-    const submit: FormEventHandler = (e) => {
-        e.preventDefault();
-
-        patch(route('profile.update'));
+        clearErrors(); // clear errors on cancel
     };
 
     return (
-        <section className={className}>
-            <header>
-                <h2 className="text-lg font-medium text-gray-900">
-                    Profile Information
-                </h2>
+        <section>
+            <h3 className="text-lg font-bold text-gray-950 mb-8 pb-4 border-b border-slate-100">
+                Informasi Pribadi
+            </h3>
 
-                <p className="mt-1 text-sm text-gray-600">
-                    Update your account's profile information and email address.
-                </p>
-            </header>
+            <form onSubmit={submit} className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+                    <div className="space-y-2">
+                        <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">
+                            First Name
+                        </label>
+                        <input
+                            type="text"
+                            value={firstName}
+                            onChange={(e) => setFirstName(e.target.value)}
+                            className="w-full px-5 py-3.5 rounded-xl border-slate-200 focus:border-[#40E0D0] focus:ring-[#40E0D0] bg-slate-50/50 text-sm font-medium"
+                        />
+                    </div>
 
-            <form onSubmit={submit} className="mt-6 space-y-6">
-                <div>
-                    <InputLabel htmlFor="name" value="Name" />
-
-                    <TextInput
-                        id="name"
-                        className="mt-1 block w-full"
-                        value={data.name}
-                        onChange={(e) => setData('name', e.target.value)}
-                        required
-                        isFocused
-                        autoComplete="name"
-                    />
-
-                    <InputError className="mt-2" message={errors.name} />
-                </div>
-
-                <div>
-                    <InputLabel htmlFor="email" value="Email" />
-
-                    <TextInput
-                        id="email"
-                        type="email"
-                        className="mt-1 block w-full"
-                        value={data.email}
-                        onChange={(e) => setData('email', e.target.value)}
-                        required
-                        autoComplete="username"
-                    />
-
-                    <InputError className="mt-2" message={errors.email} />
-                </div>
-
-                {mustVerifyEmail && user.email_verified_at === null && (
-                    <div>
-                        <p className="mt-2 text-sm text-gray-800">
-                            Your email address is unverified.
-                            <Link
-                                href={route('verification.send')}
-                                method="post"
-                                as="button"
-                                className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                            >
-                                Click here to re-send the verification email.
-                            </Link>
-                        </p>
-
-                        {status === 'verification-link-sent' && (
-                            <div className="mt-2 text-sm font-medium text-green-600">
-                                A new verification link has been sent to your
-                                email address.
-                            </div>
+                    <div className="space-y-2">
+                        <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">
+                            Last Name
+                        </label>
+                        <input
+                            type="text"
+                            value={lastName}
+                            onChange={(e) => setLastName(e.target.value)}
+                            className="w-full px-5 py-3.5 rounded-xl border-slate-200 focus:border-[#40E0D0] focus:ring-[#40E0D0] bg-slate-50/50 text-sm font-medium"
+                        />
+                        {errors.name && (
+                            <p className="text-sm text-red-600">
+                                {errors.name}
+                            </p>
                         )}
                     </div>
-                )}
 
-                <div className="flex items-center gap-4">
-                    <PrimaryButton disabled={processing}>Save</PrimaryButton>
+                    {/* email */}
+                    <div className="space-y-2">
+                        <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">
+                            Email
+                        </label>
+                        <input
+                            type="email"
+                            value={data.email}
+                            readOnly
+                            className="w-full px-5 py-3.5 rounded-xl border-slate-200 bg-slate-100 text-slate-400 cursor-not-allowed text-sm"
+                        />
+                        <p className="text-[11px] text-slate-400">
+                            Email cannot be changed directly.
+                        </p>
+                    </div>
 
+                    {/* no hp */}
+                    <div className="space-y-2">
+                        <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">
+                            Mobile Number
+                        </label>
+                        <div className="flex">
+                            <span className="inline-flex items-center px-5 rounded-l-xl border border-r-0 border-slate-200 bg-slate-100 text-slate-600 text-sm font-bold shadow-inner">
+                                +62
+                            </span>
+                            <input
+                                type="text"
+                                value={data.phone}
+                                onChange={(e) =>
+                                    setData("phone", e.target.value)
+                                }
+                                placeholder="81234567890"
+                                className="flex-1 w-full px-5 py-3.5 rounded-r-xl border-slate-200 focus:border-[#40E0D0] focus:ring-[#40E0D0] bg-slate-50/50 text-sm font-medium"
+                            />
+                        </div>
+                        {errors.phone && (
+                            <p className="text-sm text-red-600 mt-1">
+                                {errors.phone}
+                            </p>
+                        )}
+                    </div>
+
+                    {/* gender */}
+                    <div className="space-y-2">
+                        <label className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1.5 block">
+                            Gender
+                        </label>
+                        <div className="flex gap-8 pt-2.5">
+                            <label className="flex items-center gap-2.5 cursor-pointer group">
+                                <input
+                                    type="radio"
+                                    checked={data.gender === "male"}
+                                    onChange={() => setData("gender", "male")}
+                                    className="w-4 h-4 text-[#245D56] focus:ring-[#245D56] border-slate-300"
+                                />
+                                <span className="text-sm font-medium text-gray-800 group-hover:text-black">
+                                    Male
+                                </span>
+                            </label>
+                            <label className="flex items-center gap-2.5 cursor-pointer group">
+                                <input
+                                    type="radio"
+                                    checked={data.gender === "female"}
+                                    onChange={() => setData("gender", "female")}
+                                    className="w-4 h-4 text-[#245D56] focus:ring-[#245D56] border-slate-300"
+                                />
+                                <span className="text-sm font-medium text-gray-800 group-hover:text-black">
+                                    Female
+                                </span>
+                            </label>
+                        </div>
+                        {errors.gender && (
+                            <p className="text-sm text-red-600 mt-1">
+                                {errors.gender}
+                            </p>
+                        )}
+                    </div>
+
+                    {/* dob */}
+                    <div className="space-y-2">
+                        <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">
+                            Tanggal Lahir
+                        </label>
+                        <input
+                            type="date"
+                            value={data.dob}
+                            onChange={(e) => setData("dob", e.target.value)}
+                            max={today}
+                            min="1900-01-01"
+                            className="w-full px-5 py-3.5 rounded-xl border-slate-200 focus:border-[#40E0D0] focus:ring-[#40E0D0] bg-slate-50/50 text-sm font-medium text-slate-700"
+                        />
+                        {errors.dob && (
+                            <p className="text-sm text-red-600 mt-1">
+                                {errors.dob}
+                            </p>
+                        )}
+                    </div>
+                </div>
+
+                {/* action buttons */}
+                <div className="flex items-center justify-end gap-4 mt-12 pt-8 border-t border-slate-100">
                     <Transition
                         show={recentlySuccessful}
                         enter="transition ease-in-out"
@@ -107,10 +215,26 @@ export default function UpdateProfileInformation({
                         leave="transition ease-in-out"
                         leaveTo="opacity-0"
                     >
-                        <p className="text-sm text-gray-600">
-                            Saved.
+                        <p className="text-sm font-bold text-[#245D56]">
+                            Tersimpan.
                         </p>
                     </Transition>
+
+                    <button
+                        type="button"
+                        onClick={handleCancel}
+                        className="px-8 py-3 rounded-xl border-2 border-slate-200 text-slate-600 font-bold text-sm hover:bg-slate-50 transition"
+                    >
+                        Batal
+                    </button>
+
+                    <button
+                        type="submit"
+                        disabled={processing}
+                        className="px-8 py-3 rounded-xl bg-[#245D56] text-white font-bold text-sm hover:bg-[#1a443f] transition shadow-lg shadow-[#245D56]/15 disabled:opacity-50"
+                    >
+                        {processing ? "Menyimpan..." : "Simpan Perubahan"}
+                    </button>
                 </div>
             </form>
         </section>
