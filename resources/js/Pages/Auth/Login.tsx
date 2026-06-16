@@ -75,7 +75,7 @@ const Login = () => {
                     Belum punya akun?{" "}
                     <Link
                         href={route("register")}
-                        className="font-bold text-[#528250] hover:text-[#3d633b] hover:underline transition-colors duration-200"
+                        className="font-bold text-[#1ABCFE] hover:text-[#2563eb] hover:underline transition-colors duration-200"
                     >
                         Daftar sekarang
                     </Link>

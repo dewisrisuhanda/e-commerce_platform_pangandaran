@@ -111,11 +111,20 @@ export default function Navbar() {
                             href={route("profile.edit")}
                             className="flex items-center gap-3 bg-white/90 hover:bg-white pl-5 pr-2 py-1.5 rounded-full transition shadow-sm border border-gray-100"
                         >
-                            <span className="font-bold text-sm text-gray-800">
+                            <span className="font-bold text-sm text-gray-800 lowercase">
                                 {user.name.split(" ")[0]}
                             </span>
-                            <div className="w-8 h-8 bg-[#344054] text-white rounded-full flex items-center justify-center text-sm font-bold">
-                                {user.name.charAt(0).toUpperCase()}
+
+                            <div className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold overflow-hidden shadow-inner bg-[#344054] text-white">
+                                {user.profile_photo_path ? (
+                                    <img
+                                        src={`/storage/${user.profile_photo_path}`}
+                                        alt="Profile"
+                                        className="w-full h-full object-cover"
+                                    />
+                                ) : (
+                                    user.name.charAt(0).toUpperCase()
+                                )}
                             </div>
                         </Link>
                     ) : (

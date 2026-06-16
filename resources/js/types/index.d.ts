@@ -2,7 +2,12 @@ export interface User {
     id: number;
     name: string;
     email: string;
-    email_verified_at?: string;
+    email_verified_at: string;
+
+    profile_photo_path?: string;
+    phone?: string;
+    gender?: string;
+    dob?: string;
 }
 
 export type PageProps<
