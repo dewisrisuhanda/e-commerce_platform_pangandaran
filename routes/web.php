@@ -15,6 +15,13 @@ Route::get('/shop', function () {
     return Inertia::render('Storefront/Shop');
 })->name('shop');
 
+Route::get('/product/{id}', function ($id) {
+    // nanti di sini logic nge-fetch data dari database pake $id
+    return Inertia::render('Storefront/ProductDetail', [
+        'productId' => $id
+    ]);
+})->name('product.detail');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
