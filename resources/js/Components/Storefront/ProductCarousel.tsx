@@ -1,4 +1,5 @@
 import { ChevronLeft, ChevronRight, Star } from "lucide-react";
+import { Link } from "@inertiajs/react";
 
 // tipe data produk
 export interface Product {
@@ -42,9 +43,10 @@ export default function ProductCarousel({
                     {/* product grid mapping dari props {products} */}
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-5 px-6 md:px-12 lg:px-16">
                         {products.map((product) => (
-                            <div
+                            <Link
+                                href={`/product/${product.id}`}
                                 key={product.id}
-                                className="bg-white p-4 rounded-3xl shadow-sm hover:shadow-md transition duration-300 relative group border border-gray-100 flex flex-col h-full"
+                                className="bg-white p-4 rounded-3xl shadow-sm hover:shadow-md transition duration-300 relative group border border-gray-100 flex flex-col h-full cursor-pointer"
                             >
                                 {/* badge */}
                                 <div className="absolute top-4 left-4 bg-orange-100 text-orange-600 px-3 py-1 rounded-full text-[10px] md:text-xs font-bold flex items-center gap-1 z-10">
@@ -78,7 +80,7 @@ export default function ProductCarousel({
                                 <p className="text-[#245D56] font-black text-lg md:text-xl">
                                     {product.price}
                                 </p>
-                            </div>
+                            </Link>
                         ))}
                     </div>
 
