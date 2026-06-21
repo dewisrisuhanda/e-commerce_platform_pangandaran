@@ -106,7 +106,7 @@ const dummyProducts = [
 export default function Dashboard() {
     return (
         <StorefrontLayout>
-            <Head title="Home - Parigi Mart" />
+            <Head title="Home - Cibenda Mart" />
 
             <HeroSection />
             <InfoBanner />

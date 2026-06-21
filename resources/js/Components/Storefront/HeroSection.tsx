@@ -19,7 +19,7 @@ export default function HeroSection() {
 
             <div className="absolute bottom-[40%] w-full flex flex-col items-center pointer-events-none z-10">
                 <h1 className="text-[90px] md:text-[170px] font-bold tracking-widest leading-[0.8] text-[#40E0D0] drop-shadow-md -mb-6 md:-mb-12">
-                    PARIGI
+                    CIBENDA
                 </h1>
                 <h1 className="text-[90px] md:text-[170px] font-bold tracking-widest leading-[0.8] text-white drop-shadow-md translate-y-1/2">
                     MART

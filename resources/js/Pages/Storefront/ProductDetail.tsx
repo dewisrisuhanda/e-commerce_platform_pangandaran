@@ -95,7 +95,7 @@ export default function ProductDetail({ productId }: { productId: string }) {
 
     return (
         <StorefrontLayout>
-            <Head title={`${productData.name} - Parigi Mart`} />
+            <Head title={`${productData.name} - Cibenda Mart`} />
 
             <div className="min-h-screen bg-[#EAF7F7] px-4 pb-8 pt-28 font-sans md:px-8 md:pb-10 md:pt-36">
                 <div className="mx-auto max-w-6xl rounded-[2.5rem] bg-white/90 p-5 shadow-[0_20px_80px_rgba(15,23,42,0.08)] backdrop-blur md:p-8 lg:p-10">

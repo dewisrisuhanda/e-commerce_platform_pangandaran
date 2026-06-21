@@ -19,8 +19,8 @@ export default function AuthBranding({ type = "login" }: Props) {
                     className="text-center font-bold text-4xl sm:text-5xl md:text-6xl tracking-tight select-none relative z-10 shrink-0 drop-shadow-[0_4px_4px_rgba(0,0,0,0.4)]"
                     style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
                 >
-                    <span className="text-[#4FD1C5]">Parigi</span>
-                    <span className="text-white">Mart</span>
+                    <span className="text-[#4FD1C5]">CIBENDA</span>
+                    <span className="text-white">MART</span>
                 </h1>
 
                 {type === "register" && (

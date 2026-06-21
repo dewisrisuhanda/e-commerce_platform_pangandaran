@@ -23,8 +23,8 @@ export default function ShopHero() {
             <div className="absolute top-[35%] md:top-[30%] -translate-y-1/2 w-full flex justify-center z-10 px-4">
                 <div className="bg-white/10 backdrop-blur-md border border-white/20 px-8 py-4 md:px-12 md:py-6 rounded-2xl md:rounded-3xl shadow-[0_10px_50px_rgba(0,0,0,0.1)] text-center">
                     <h1 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tighter select-none">
-                        <span className="text-[#40E0D0]">Parigi</span>
-                        <span className="text-white">Mart</span>
+                        <span className="text-[#40E0D0]">CIBENDA</span>
+                        <span className="text-white">MART</span>
                     </h1>
                 </div>
             </div>

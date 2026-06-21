@@ -15,8 +15,8 @@ export default function Footer() {
                     {/* title */}
                     <div className="flex flex-col items-start w-full">
                         <div className="flex items-center text-3xl md:text-4xl font-bold mb-6 select-none tracking-tight">
-                            <span className="text-[#40E0D0]">Parigi</span>
-                            <span className="text-white">Mart</span>
+                            <span className="text-[#40E0D0]">CIBENDA</span>
+                            <span className="text-white">MART</span>
                         </div>
 
                         <div className="flex items-center gap-4 flex-wrap">
@@ -53,10 +53,10 @@ export default function Footer() {
                         </div>
                     </div>
 
-                    {/* parigimart */}
+                    {/* cibendamart */}
                     <div>
                         <h4 className="text-[17px] font-bold mb-6">
-                            ParigiMart
+                            CIBENDAMART
                         </h4>
                         <ul className="space-y-3.5">
                             <li className="flex items-center gap-2.5 text-[15px] hover:text-[#40E0D0] transition cursor-pointer font-medium">
@@ -144,7 +144,7 @@ export default function Footer() {
                 {/* wm */}
                 <div className="pt-10 flex flex-col items-center border-t border-white/10">
                     <p className="text-[15px] text-white font-medium">
-                        © {new Date().getFullYear()} ParigiMart. All rights
+                        © {new Date().getFullYear()} CibendaMart. All rights
                         reserved.
                     </p>
                 </div>

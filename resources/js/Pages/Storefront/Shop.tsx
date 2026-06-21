@@ -147,7 +147,7 @@ const seafoodProducts = [
 export default function Shop() {
     return (
         <StorefrontLayout>
-            <Head title="Shop - Parigi Mart" />
+            <Head title="Shop - Cibenda Mart" />
 
             <ShopHero />
 
