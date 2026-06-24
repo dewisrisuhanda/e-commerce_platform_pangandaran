@@ -6,7 +6,7 @@ import logoParigi from "@/assets/images/parigi_logo.png";
 const navLinks = [
     { name: "Home", href: "/dashboard" },
     { name: "Shop", href: "/shop" },
-    { name: "Order", href: "#" },
+    { name: "Order", href: "/checkout" },
     { name: "Delivery", href: "#" },
 ];
 
@@ -39,9 +39,8 @@ export default function Navbar() {
 
     return (
         <div
-            className={`fixed top-4 md:top-6 w-full flex justify-center z-50 px-4 md:px-8 transition-transform duration-300 ease-in-out ${
-                isVisible ? "translate-y-0" : "translate-y-[-150%]"
-            }`}
+            className={`fixed top-4 md:top-6 w-full flex justify-center z-50 px-4 md:px-8 transition-transform duration-300 ease-in-out ${isVisible ? "translate-y-0" : "translate-y-[-150%]"
+                }`}
         >
             <nav className="w-full max-w-300 bg-linear-to-r from-[#389f9f]/80 via-[#74bcbc]/60 to-[#f0f4f8]/90 backdrop-blur-xl shadow-md rounded-3xl md:rounded-full px-4 py-2 md:px-6 md:py-3 flex flex-col md:flex-row items-center justify-between border border-white/40">
                 {/* header row on mobile */}
@@ -85,11 +84,10 @@ export default function Navbar() {
                             <Link
                                 key={link.name}
                                 href={link.href}
-                                className={`py-2 rounded-full font-bold shadow-sm text-sm text-center px-4 transition-all ${
-                                    isActive
+                                className={`py-2 rounded-full font-bold shadow-sm text-sm text-center px-4 transition-all ${isActive
                                         ? "bg-white text-gray-900 shadow-sm"
                                         : "text-[#4A5568] hover:text-gray-900 hover:bg-white/40"
-                                }`}
+                                    }`}
                             >
                                 {link.name}
                             </Link>
@@ -150,11 +148,10 @@ export default function Navbar() {
                                 <Link
                                     key={link.name}
                                     href={link.href}
-                                    className={`py-3 rounded-xl font-bold text-sm px-4 transition-all ${
-                                        isActive
+                                    className={`py-3 rounded-xl font-bold text-sm px-4 transition-all ${isActive
                                             ? "bg-white text-gray-900 shadow-sm"
                                             : "text-white hover:bg-white/20"
-                                    }`}
+                                        }`}
                                 >
                                     {link.name}
                                 </Link>

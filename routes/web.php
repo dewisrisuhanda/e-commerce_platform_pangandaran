@@ -18,7 +18,7 @@ Route::get('/shop', function () {
 Route::get('/product/{id}', function ($id) {
     // nanti di sini logic nge-fetch data dari database pake $id
     return Inertia::render('Storefront/ProductDetail', [
-        'productId' => $id
+        'productId' => $id,
     ]);
 })->name('product.detail');
 
@@ -27,9 +27,12 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::post('/profile/photo', [ProfileController::class, 'updatePhoto'])->name('profile.photo.update');
+    Route::get('/checkout', function () {
+        return Inertia::render('Checkout/Checkout');
+    })->name('checkout');
 });
 
 Route::get('/auth/google/redirect', [SocialiteController::class, 'redirect'])->name('google.redirect');
 Route::get('/auth/google/callback', [SocialiteController::class, 'callback'])->name('google.callback');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
