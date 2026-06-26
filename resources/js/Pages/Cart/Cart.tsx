@@ -7,7 +7,6 @@ import CartSummary from '@/Components/Cart/CartSummary';
 import ProductRecommendations from '@/Components/Cart/ProductRecommendations';
 
 export default function Cart() {
-    // Data dummy 100% ngikutin gambar desain lu
     const [cartData] = useState([
         {
             id: 1,
@@ -35,10 +34,10 @@ export default function Cart() {
                 <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6">Keranjang</h1>
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                    {/* BAGIAN KIRI */}
+                    {/* left section */}
                     <div className="lg:col-span-8">
 
-                        {/* Checkbox Pilih Semua */}
+                        {/* checkbox */}
                         <div className="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 mb-6">
                             <label className="flex items-center gap-3 cursor-pointer w-fit">
                                 <input type="checkbox" className="w-5 h-5 rounded text-[#245D56] focus:ring-[#245D56] border-slate-300" />
@@ -46,13 +45,13 @@ export default function Cart() {
                             </label>
                         </div>
 
-                        {/* Looping Toko */}
+                        {/* looping toko */}
                         {cartData.map((store) => (
                             <CartStoreGroup key={store.id} store={store} />
                         ))}
                     </div>
 
-                    {/* BAGIAN KANAN */}
+                    {/* right section */}
                     <div className="lg:col-span-4">
                         <CartSummary />
                     </div>
