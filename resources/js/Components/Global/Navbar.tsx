@@ -70,9 +70,11 @@ export default function Navbar() {
                     </Link>
 
                     {/* cart icon mobile */}
-                    <button className="md:hidden p-2 text-white bg-black/10 rounded-lg hover:bg-black/20 transition relative">
+                    <Link
+                        href={route('cart')}
+                        className="md:hidden p-2 text-white bg-black/10 rounded-lg hover:bg-black/20 transition relative">
                         <ShoppingCart size={24} />
-                    </button>
+                    </Link>
                 </div>
 
                 {/* desktop navlinks */}
@@ -85,8 +87,8 @@ export default function Navbar() {
                                 key={link.name}
                                 href={link.href}
                                 className={`py-2 rounded-full font-bold shadow-sm text-sm text-center px-4 transition-all ${isActive
-                                        ? "bg-white text-gray-900 shadow-sm"
-                                        : "text-[#4A5568] hover:text-gray-900 hover:bg-white/40"
+                                    ? "bg-white text-gray-900 shadow-sm"
+                                    : "text-[#4A5568] hover:text-gray-900 hover:bg-white/40"
                                     }`}
                             >
                                 {link.name}
@@ -97,12 +99,15 @@ export default function Navbar() {
 
                 {/* desktop profile */}
                 <div className="hidden md:flex items-center gap-3">
-                    <button className="w-12 h-12 bg-white/90 hover:bg-white rounded-full flex items-center justify-center transition shadow-sm border border-gray-100">
+                    <Link
+                        href={route('cart')}
+                        className="w-12 h-12 bg-white/90 hover:bg-white rounded-full flex items-center justify-center transition shadow-sm border border-gray-100"
+                    >
                         <ShoppingCart
                             className="w-5 h-5 text-gray-800"
                             strokeWidth={2}
                         />
-                    </button>
+                    </Link>
 
                     {user ? (
                         <Link
@@ -149,8 +154,8 @@ export default function Navbar() {
                                     key={link.name}
                                     href={link.href}
                                     className={`py-3 rounded-xl font-bold text-sm px-4 transition-all ${isActive
-                                            ? "bg-white text-gray-900 shadow-sm"
-                                            : "text-white hover:bg-white/20"
+                                        ? "bg-white text-gray-900 shadow-sm"
+                                        : "text-white hover:bg-white/20"
                                         }`}
                                 >
                                     {link.name}
