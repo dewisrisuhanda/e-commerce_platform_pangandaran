@@ -30,6 +30,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/checkout', function () {
         return Inertia::render('Checkout/Checkout');
     })->name('checkout');
+
+    Route::get('/cart', function () {
+        return Inertia::render('Cart/Cart');
+    })->name('cart');
 });
 
 Route::get('/auth/google/redirect', [SocialiteController::class, 'redirect'])->name('google.redirect');
